@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 import setuptools
 setup(
     name = "algokit",
-    version = "0.0.3",
+    version = "0.0.4",
     keywords = ["pip", "algokit", "algorithm"],
     description = "common utilities and algorithm",
     long_description = "common utilities and algorithm",
@@ -14,5 +14,6 @@ setup(
     packages = find_packages(),
     include_package_data = True,
     platforms = "any",
-    install_requires = []
+    install_requires = ['pandas'],
+    data_files = [("algokit/geo",["algokit/geo/adcodes.csv"])]
 )
