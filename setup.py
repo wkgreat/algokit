@@ -1,8 +1,8 @@
 from setuptools import setup, find_packages
-
+import setuptools
 setup(
     name = "algokit",
-    version = "0.0.1",
+    version = "0.0.3",
     keywords = ["pip", "algokit", "algorithm"],
     description = "common utilities and algorithm",
     long_description = "common utilities and algorithm",
