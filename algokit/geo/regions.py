@@ -2,6 +2,8 @@
 china administrative regions name and codes
 """
 import pandas as pd
+import os
+_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 
 def all_china_provinces():
@@ -9,7 +11,7 @@ def all_china_provinces():
     all china provinces code and name
     :return iterator of tuple(prov_code, prov_name)
     """
-    df = pd.read_csv('adcodes.csv')
+    df = pd.read_csv(_get_path('adcodes.csv'))
     df = df[["prov_id","prov_name"]]
     df.drop_duplicates(inplace=True)
     for r in df.iterrows():
@@ -23,7 +25,7 @@ def all_china_cities(province_code=None, province_name=None):
     :param province_name: filter by province name, skip it if province code was set
     :return iterator of tuple(prov_code, prov_name, city_code, city_name)
     """
-    df = pd.read_csv('adcodes.csv')
+    df = pd.read_csv(_get_path('adcodes.csv'))
     if province_code: df = _filter_by_prov_code(df, province_code)
     elif province_name: df = _filter_by_prov_name(df, province_name)
     df = df[["prov_id","prov_name","city_id","city_name"]]
@@ -43,7 +45,8 @@ def all_china_districts(province_code=None, province_name=None, city_code=None, 
 
     when both province and city parameter are set, must guarantee the city located in the province.
     """
-    df = pd.read_csv('adcodes.csv')
+
+    df = pd.read_csv(_get_path('adcodes.csv'))
     if province_code: df = _filter_by_prov_code(df, province_code)
     elif province_name: df = _filter_by_prov_name(df, province_name)
     if city_code: df = _filter_by_city_code(df, city_code)
@@ -73,6 +76,10 @@ def _filter_by_city_code(df: pd.DataFrame, city_code) -> pd.DataFrame:
 def _filter_by_city_name(df: pd.DataFrame, city_name) -> pd.DataFrame:
     df = df[df["city_name"] == city_name]
     return df
+
+
+def _get_path(path):
+    return os.path.join(_ROOT, path)
 
 
 if __name__ == '__main__':
