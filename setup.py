@@ -1,19 +1,19 @@
 from setuptools import setup, find_packages
-import setuptools
+
 setup(
-    name = "algokit",
-    version = "0.0.4",
-    keywords = ["pip", "algokit", "algorithm"],
-    description = "common utilities and algorithm",
-    long_description = "common utilities and algorithm",
+    name="algokit",
+    version="0.0.5",
+    keywords=["pip", "algokit", "algorithm"],
+    description="common utilities and algorithm",
+    long_description="common utilities and algorithm",
 
-    url = "https://github.com/wkgreat/algokit",
-    author = "ke wang",
-    author_email = "wkgreat@outlook.com",
+    url="https://github.com/wkgreat/algokit",
+    author="ke wang",
+    author_email="wkgreat@outlook.com",
 
-    packages = find_packages(),
-    include_package_data = True,
-    platforms = "any",
-    install_requires = ['pandas'],
-    data_files = [("algokit/geo",["algokit/geo/adcodes.csv"])]
+    packages=find_packages(),
+    include_package_data=True,
+    platforms="any",
+    install_requires=['pandas'],
+    data_files=[("algokit/geo", ["algokit/geo/adcodes.csv"])]
 )
