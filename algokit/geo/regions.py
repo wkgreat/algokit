@@ -4,6 +4,50 @@ china administrative regions name and codes
 import pandas as pd
 import os
 _ROOT = os.path.abspath(os.path.dirname(__file__))
+_regions_df = None
+_regions_provs = None
+_regions_cities = None
+_regions_districts = None
+
+
+def _get_df() -> pd.DataFrame:
+    """
+    read region infos from csv file to Dataframe
+    """
+    global _regions_df
+    if not _regions_df:
+        _regions_df = pd.read_csv(_get_path('adcodes.csv'))
+    return _regions_df
+
+
+def _get_regions_provs() -> dict:
+    global _regions_provs
+    if not _regions_provs:
+        df = _get_df()
+        df = df[["prov_id", "prov_name"]]
+        df = df.drop_duplicates()
+        _regions_provs = df.set_index(["prov_id"]).to_dict()["prov_name"]
+    return _regions_provs
+
+
+def _get_regions_cities() -> dict:
+    global _regions_cities
+    if not _regions_cities:
+        df = _get_df()
+        df = df[["city_id", "city_name"]]
+        df = df.drop_duplicates()
+        _regions_cities = df.set_index(["city_id"]).to_dict()["city_name"]
+    return _regions_cities
+
+
+def _get_regions_districts() -> dict:
+    global _regions_districts
+    if not _regions_districts:
+        df = _get_df()
+        df = df[["district_id", "district_name"]]
+        df = df.drop_duplicates()
+        _regions_districts = df.set_index(["district_id"]).to_dict()["district_name"]
+    return _regions_districts
 
 
 def all_china_provinces():
@@ -11,7 +55,7 @@ def all_china_provinces():
     all china provinces code and name
     :return iterator of tuple(prov_code, prov_name)
     """
-    df = pd.read_csv(_get_path('adcodes.csv'))
+    df = _get_df()
     df = df[["prov_id","prov_name"]]
     df.drop_duplicates(inplace=True)
     for r in df.iterrows():
@@ -25,7 +69,7 @@ def all_china_cities(province_code=None, province_name=None):
     :param province_name: filter by province name, skip it if province code was set
     :return iterator of tuple(prov_code, prov_name, city_code, city_name)
     """
-    df = pd.read_csv(_get_path('adcodes.csv'))
+    df = _get_df()
     if province_code: df = _filter_by_prov_code(df, province_code)
     elif province_name: df = _filter_by_prov_name(df, province_name)
     df = df[["prov_id","prov_name","city_id","city_name"]]
@@ -46,7 +90,7 @@ def all_china_districts(province_code=None, province_name=None, city_code=None, 
     when both province and city parameter are set, must guarantee the city located in the province.
     """
 
-    df = pd.read_csv(_get_path('adcodes.csv'))
+    df = _get_df()
     if province_code: df = _filter_by_prov_code(df, province_code)
     elif province_name: df = _filter_by_prov_name(df, province_name)
     if city_code: df = _filter_by_city_code(df, city_code)
@@ -54,6 +98,45 @@ def all_china_districts(province_code=None, province_name=None, city_code=None, 
     df.drop_duplicates(inplace=True)
     for r in df.iterrows():
         yield r[1].to_list()
+
+
+def province_name_to_code(province_name):
+    """ province name to code """
+    for theid, thename in _get_regions_provs().items():
+        if thename == province_name:
+            return theid
+    return 0
+
+
+def province_code_to_name(province_code):
+    """ province code to name """
+    return _get_regions_provs().get(province_code, None)
+
+
+def city_name_to_code(city_name):
+    """ city name to code """
+    for theid, thename in _get_regions_cities().items():
+        if thename == city_name:
+            return theid
+    return 0
+
+
+def city_code_to_name(city_code):
+    """ province code to name """
+    return _get_regions_cities().get(city_code, None)
+
+
+def district_name_to_code(district_name):
+    """ district name to code """
+    for theid, thename in _get_regions_districts().items():
+        if thename == district_name:
+            return theid
+    return 0
+
+
+def district_code_to_name(district_code):
+    """ district code to name"""
+    return _get_regions_districts().get(district_code, None)
 
 
 def _filter_by_prov_code(df: pd.DataFrame, prov_code) -> pd.DataFrame:
@@ -83,8 +166,7 @@ def _get_path(path):
 
 
 if __name__ == '__main__':
-    print(list(all_china_districts(province_name="山东省", city_name="济宁市")))
-
+    pass
 
 
 
