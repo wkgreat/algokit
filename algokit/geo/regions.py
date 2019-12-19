@@ -15,14 +15,14 @@ def _get_df() -> pd.DataFrame:
     read region infos from csv file to Dataframe
     """
     global _regions_df
-    if not _regions_df:
+    if _regions_df is None:
         _regions_df = pd.read_csv(_get_path('adcodes.csv'))
     return _regions_df
 
 
 def _get_regions_provs() -> dict:
     global _regions_provs
-    if not _regions_provs:
+    if _regions_provs is None:
         df = _get_df()
         df = df[["prov_id", "prov_name"]]
         df = df.drop_duplicates()
@@ -32,7 +32,7 @@ def _get_regions_provs() -> dict:
 
 def _get_regions_cities() -> dict:
     global _regions_cities
-    if not _regions_cities:
+    if _regions_cities is None:
         df = _get_df()
         df = df[["city_id", "city_name"]]
         df = df.drop_duplicates()
@@ -42,7 +42,7 @@ def _get_regions_cities() -> dict:
 
 def _get_regions_districts() -> dict:
     global _regions_districts
-    if not _regions_districts:
+    if _regions_districts is None:
         df = _get_df()
         df = df[["district_id", "district_name"]]
         df = df.drop_duplicates()
@@ -70,8 +70,8 @@ def all_china_cities(province_code=None, province_name=None):
     :return iterator of tuple(prov_code, prov_name, city_code, city_name)
     """
     df = _get_df()
-    if province_code: df = _filter_by_prov_code(df, province_code)
-    elif province_name: df = _filter_by_prov_name(df, province_name)
+    if province_code is not None: df = _filter_by_prov_code(df, province_code)
+    elif province_name is not None: df = _filter_by_prov_name(df, province_name)
     df = df[["prov_id","prov_name","city_id","city_name"]]
     df.drop_duplicates(inplace=True)
     for r in df.iterrows():
@@ -91,10 +91,10 @@ def all_china_districts(province_code=None, province_name=None, city_code=None, 
     """
 
     df = _get_df()
-    if province_code: df = _filter_by_prov_code(df, province_code)
-    elif province_name: df = _filter_by_prov_name(df, province_name)
-    if city_code: df = _filter_by_city_code(df, city_code)
-    elif city_name: df = _filter_by_city_name(df, city_name)
+    if province_code is not None: df = _filter_by_prov_code(df, province_code)
+    elif province_name is not None: df = _filter_by_prov_name(df, province_name)
+    if city_code is not None: df = _filter_by_city_code(df, city_code)
+    elif city_name is not None: df = _filter_by_city_name(df, city_name)
     df.drop_duplicates(inplace=True)
     for r in df.iterrows():
         yield r[1].to_list()
