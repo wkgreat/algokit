@@ -57,7 +57,7 @@ def all_china_provinces():
     """
     df = _get_df()
     df = df[["prov_id","prov_name"]]
-    df.drop_duplicates(inplace=True)
+    df = df.drop_duplicates()
     for r in df.iterrows():
         yield r[1].to_list()
 
@@ -73,7 +73,7 @@ def all_china_cities(province_code=None, province_name=None):
     if province_code is not None: df = _filter_by_prov_code(df, province_code)
     elif province_name is not None: df = _filter_by_prov_name(df, province_name)
     df = df[["prov_id","prov_name","city_id","city_name"]]
-    df.drop_duplicates(inplace=True)
+    df = df.drop_duplicates()
     for r in df.iterrows():
         yield r[1].to_list()
 
@@ -89,13 +89,12 @@ def all_china_districts(province_code=None, province_name=None, city_code=None, 
 
     when both province and city parameter are set, must guarantee the city located in the province.
     """
-
     df = _get_df()
     if province_code is not None: df = _filter_by_prov_code(df, province_code)
     elif province_name is not None: df = _filter_by_prov_name(df, province_name)
     if city_code is not None: df = _filter_by_city_code(df, city_code)
     elif city_name is not None: df = _filter_by_city_name(df, city_name)
-    df.drop_duplicates(inplace=True)
+    df = df.drop_duplicates()
     for r in df.iterrows():
         yield r[1].to_list()
 
@@ -166,7 +165,10 @@ def _get_path(path):
 
 
 if __name__ == '__main__':
-    pass
+    city_infos = all_china_cities(province_name="山西省")
+    city_codes = [x for x in city_infos]
+
+    print(city_codes)
 
 
 
