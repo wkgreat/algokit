@@ -50,7 +50,7 @@ def _get_regions_districts() -> dict:
     return _regions_districts
 
 
-def all_china_provinces():
+def iter_all_china_provinces():
     """
     all china provinces code and name
     :return iterator of tuple(prov_code, prov_name)
@@ -62,7 +62,7 @@ def all_china_provinces():
         yield r[1].to_list()
 
 
-def all_china_cities(province_code=None, province_name=None):
+def iter_all_china_cities(province_code=None, province_name=None):
     """
     all china cities code and name
     :param province_code: filter by province code
@@ -78,7 +78,7 @@ def all_china_cities(province_code=None, province_name=None):
         yield r[1].to_list()
 
 
-def all_china_districts(province_code=None, province_name=None, city_code=None, city_name=None):
+def iter_all_china_districts(province_code=None, province_name=None, city_code=None, city_name=None):
     """
     all china districts code and name
     :param province_code: filter by province code
@@ -165,7 +165,7 @@ def _get_path(path):
 
 
 if __name__ == '__main__':
-    city_infos = all_china_cities(province_name="山西省")
+    city_infos = iter_all_china_cities(province_name="山西省")
     city_codes = [x for x in city_infos]
 
     print(city_codes)

@@ -2,6 +2,7 @@ from geopy.distance import geodesic
 
 
 def distance(lon1, lat1, lon2, lat2):
+    """calculate distance between two longitude, latitude point"""
     return geodesic((lat1,lon1),(lat2,lon2)).m
 
 
