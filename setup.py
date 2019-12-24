@@ -14,6 +14,6 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     platforms="any",
-    install_requires=['pandas'],
+    install_requires=['pandas','geographiclib'],
     data_files=[("algokit/geo", ["algokit/geo/adcodes.csv"])]
 )

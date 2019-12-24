@@ -12,8 +12,11 @@ def mape_matrix(X: np.ndarray, W: np.ndarray, Y: np.ndarray):
     try:
         m = np.abs(Y - np.matmul(X, W)) * 1.0 / Y
         return m
-    except:
-        raise Exception("parameter must numpy array")
+    except Exception as e:
+        print("X shape: {} ".format(X.shape))
+        print("W shape: {} ".format(W.shape))
+        print("Y shape: {} ".format(Y.shape))
+        raise e
 
 
 def mape_value(x, w, y):
@@ -32,16 +35,16 @@ def mape_dataframe(df:pd.DataFrame, xcols:list, ycols:list, W):
     X = np.array(df[xcols].values)
     Y = np.array(df[ycols].values)
     if isinstance(W, (pd.DataFrame, pd.Series)):
-        W = np.array(W.values)
+        W = np.array(W.values).reshape((-1,1))
     elif isinstance(W, list):
-        W = np.array(W)
+        W = np.array(W).reshape((-1,1))
     return mape_matrix(X,W,Y)
 
 
 if __name__ == '__main__':
-    x = np.array([[1,2],[3,4]])
-    y = np.array([1,2])
-    w = np.array([0.1,0.2])
-    print(type(w))
-    print(mape_matrix(x,w,y))
-
+    dataset = pd.DataFrame({
+        "X": [1.0,2.0,3.0],
+        "Y": [4.0,5.0,6.0]
+    })
+    W = [[3]]
+    print(mape_dataframe(dataset, ["X"], ["Y"], W))
