@@ -44,10 +44,15 @@ def bus_request(key, origin, destination, city, cityd=None,
     url = "https://restapi.amap.com/v3/direction/transit/integrated"
     return rest.get(url, params)
 
-def drive_request():pass
+
+def drive_request():
+    # TODO
+    pass
 
 
-def bike_request():pass
+def bike_request():
+    #TODO
+    pass
 
 
 def truck_request(key, origin, destination, size, originid=None, originidtype=None, destinationid=None, destinationidtype=None,
@@ -114,4 +119,6 @@ class RoutingAPI:
 
 if __name__ == '__main__':
     import algokit as ak
-    ak.amap.api_routing.truck_request("","","",10)
+    import json
+    res = ak.amap.api_routing.truck_request("551008fd722823c51290753166a95e8e","116.434307,39.90909","116.434446,39.90816",3)
+    print(json.loads(res))
