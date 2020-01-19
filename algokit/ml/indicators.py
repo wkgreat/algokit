@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 
 
-def mape_matrix(X: np.ndarray, W: np.ndarray, Y: np.ndarray):
+def mape_matrix(X, W, Y):
     """
     MAPE of each line of matrix
     """
@@ -23,7 +23,7 @@ def mape_value(x, w, y):
     return abs(y-w*x)*1.0/y
 
 
-def mape_dataframe(df:pd.DataFrame, xcols:list, ycols:list, W):
+def mape_dataframe(df, xcols, ycols, W):
     """
     对pandas数据集进行计算
     :param df:

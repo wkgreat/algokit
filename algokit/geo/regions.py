@@ -10,7 +10,7 @@ _regions_cities = None
 _regions_districts = None
 
 
-def _get_df() -> pd.DataFrame:
+def _get_df():
     """
     read region infos from csv file to Dataframe
     """
@@ -20,7 +20,7 @@ def _get_df() -> pd.DataFrame:
     return _regions_df
 
 
-def _get_regions_provs() -> dict:
+def _get_regions_provs():
     global _regions_provs
     if _regions_provs is None:
         df = _get_df()
@@ -30,7 +30,7 @@ def _get_regions_provs() -> dict:
     return _regions_provs
 
 
-def _get_regions_cities() -> dict:
+def _get_regions_cities():
     global _regions_cities
     if _regions_cities is None:
         df = _get_df()
@@ -40,7 +40,7 @@ def _get_regions_cities() -> dict:
     return _regions_cities
 
 
-def _get_regions_districts() -> dict:
+def _get_regions_districts():
     global _regions_districts
     if _regions_districts is None:
         df = _get_df()
@@ -138,24 +138,24 @@ def district_code_to_name(district_code):
     return _get_regions_districts().get(district_code, None)
 
 
-def _filter_by_prov_code(df: pd.DataFrame, prov_code) -> pd.DataFrame:
+def _filter_by_prov_code(df, prov_code):
     prov_id = int(prov_code)
     df = df[df["prov_id"] == prov_id]
     return df
 
 
-def _filter_by_prov_name(df: pd.DataFrame, prov_name) -> pd.DataFrame:
+def _filter_by_prov_name(df, prov_name):
     df = df[df["prov_name"] == prov_name]
     return df
 
 
-def _filter_by_city_code(df: pd.DataFrame, city_code) -> pd.DataFrame:
+def _filter_by_city_code(df, city_code):
     city_id = int(city_code)
     df = df[df["city_id"] == city_id]
     return df
 
 
-def _filter_by_city_name(df: pd.DataFrame, city_name) -> pd.DataFrame:
+def _filter_by_city_name(df, city_name):
     df = df[df["city_name"] == city_name]
     return df
 
@@ -165,10 +165,11 @@ def _get_path(path):
 
 
 if __name__ == '__main__':
-    city_infos = iter_all_china_cities(province_name="山西省")
-    city_codes = [x for x in city_infos]
-
-    print(city_codes)
+    # city_infos = iter_all_china_cities(province_name="山西省")
+    # city_codes = [x for x in city_infos]
+    #
+    # print(city_codes)
+    print(__file__)
 
 
 
